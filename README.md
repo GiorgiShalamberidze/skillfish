@@ -1,8 +1,8 @@
 # AI Coach Skills
 
-**172 expert AI skills** for coding agents — published via [Skillfish](https://skill.fish).
+**193 expert AI skills** for coding agents — **AI Coach** at [aicoach.pw](https://aicoach.pw). Also distributed via [Skillfish](https://skill.fish).
 
-**Website:** [coach.omazy.ai](https://coach.omazy.ai)
+**Product site:** [aicoach.pw](https://aicoach.pw)
 
 ## Install
 
@@ -31,7 +31,7 @@ skillfish add johnefemer/skillfish/skills/<skill-name>
 
 Each skill is a `SKILL.md` file with structured prompts that turn your AI coding agent into a domain expert. Skills work with Claude Code, Cursor, and any agent that supports Skillfish.
 
-Browse all skills at [coach.omazy.ai](https://coach.omazy.ai).
+Browse all skills at [aicoach.pw](https://aicoach.pw).
 
 ## Author
 
