@@ -6,6 +6,18 @@
 
 ## Install
 
+### Option 1 — npx skills (no global install needed)
+
+```bash
+# Install a specific skill
+npx skills add johnefemer/skillfish --skill <skill-name>
+
+# Install all skills
+npx skills add johnefemer/skillfish --all
+```
+
+### Option 2 — Skillfish CLI
+
 ```bash
 # Install all skills
 skillfish add johnefemer/skillfish --all

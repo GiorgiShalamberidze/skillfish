@@ -519,6 +519,83 @@ When both skills are active, they complement each other without overlap:
 
 The worklog provides "actuals" data that feeds back into sprint velocity calibration.
 
+## Good to Know
+
+### The Anti-Hallucination Foundation
+
+AI coding agents hallucinate about codebases — not because they're broken, but because they have no persistent memory of what was actually built. An agent will confidently describe a feature as working when it was reverted last Tuesday, reference an architectural decision that was superseded a month ago, or re-propose a solution that was already tried and explicitly rejected.
+
+The `.project/` files exist to fix this. When an agent reads changelogs and feature-logs before starting work, it grounds its reasoning in recorded reality — not in stale training context or session assumptions.
+
+**What gets prevented:**
+
+- "Let's add Redis caching here" — when the worklog already records that caching was removed due to race conditions in a prior session
+- "The API uses JWT auth" — when the changelog shows a migration to session tokens that happened two weeks ago
+- Re-opening decisions already documented in Decisions & Rationale with their trade-offs
+- Touching a cross-repo dependency without knowing what changed on the other side
+
+**The read-before-work rule is the core habit.** Reading `feature-log/<name>.md` before touching a feature is not a nice-to-have — it is the primary mechanism that prevents an agent from operating on a false model of the system.
+
+### Multi-Repo: One Canonical History Across All Repos
+
+In a multi-repo workspace, the `.project/` directory lives at the workspace root — a single pane of glass that tracks work across all repos simultaneously. There is no native git command that spans repo boundaries. This is the only cross-repo timeline that exists.
+
+```
+workspace/
+├── .project/          ← single history for all repos below
+├── backend-api/
+├── frontend-app/
+└── shared-lib/
+```
+
+Each changelog and worklog entry is tagged `[backend-api]`, `[frontend-app]`, `[shared-lib]`, making the history both unified and filterable. An agent planning work on `frontend-app` reads the same daily changelogs as one working on `backend-api` — and sees the cross-repo dependencies that constrain both.
+
+**For technical planning, this enables:**
+
+- Dependency graphs visible across repo boundaries — feature-logs document cross-project data flows and ownership
+- Breaking changes in `shared-lib` co-authored with the `frontend-app` adapter changes in the same changelog entry
+- Velocity actuals (worklog sizes + real hours) reflecting the true cost of cross-repo work, not just per-repo estimates
+- A single source of truth for what is "done" when multiple repos must change together for one feature to ship
+
+### Standards This Skill Respects
+
+| Standard | How It's Applied |
+|----------|-----------------|
+| [Keep a Changelog](https://keepachangelog.com/) | Changelog categories (Added / Changed / Fixed / Removed / Security / Deprecated), date-file naming `YYYY-MM-DD.md` |
+| Conventional Commits (via `git-commit-hygiene`) | Commit refs in the changelog link to hygienically-scoped commits — each ref is traceable to a single purpose |
+| T-Shirt Sizing (shared with `github-project-manager`) | Planning estimates and logged actuals use the same XS=1pt … XL=8pt scale — no translation layer between planning and history |
+| Outcome-first writing | Every entry starts with WHY (user / business impact), not WHAT — the changelog reads as a product record, not an activity log |
+
+Because the changelog follows Keep a Changelog conventions, the accumulated `.project/changelog/` files are also ready to feed release notes, sprint retrospectives, and stakeholder reporting without reformatting.
+
+### The Changelog as Queryable Project Memory
+
+Accumulated `.project/changelog/` files form a date-indexed, project-tagged record of every meaningful change. Because entries follow a consistent template, they are machine-readable by the next agent session:
+
+```bash
+# What changed in backend-api in the last 30 days?
+grep -r "\[backend-api\]" .project/changelog/
+
+# Which issues were closed last week?
+grep -r "Closes:" .project/changelog/2026-03-1*.md
+
+# What decisions were made about the auth system?
+grep -r "auth" .project/feature-log/
+
+# What was the actual effort on XL tasks this month?
+grep -r "XL" .project/worklog/
+```
+
+Commit refs in the changelog are mandatory precisely because they create a hard link from the human-readable history to the actual diff. An agent can jump from a changelog entry to the code that caused a behavior — closing the loop between "what we decided" and "what was shipped."
+
+### Why the Worklog Exists Alongside the Changelog
+
+The changelog answers: *what changed and why?* The worklog answers: *what did we try to do, and how did it actually go?*
+
+The distinction matters for AI agents re-entering a task mid-stream. An incomplete worklog entry (goal stated, outcome blank, size estimated but not actual) signals that the work is still in flight. A complete entry signals it is done. This state is invisible in the changelog, which only records completed outcomes.
+
+The worklog also captures blockers — things that were attempted but could not proceed. This is critical anti-hallucination data: an agent picking up a blocked task needs to know *why it stopped*, not just that it hasn't appeared in the changelog yet.
+
 ## Related Skills
 
 | Skill | Relationship |
