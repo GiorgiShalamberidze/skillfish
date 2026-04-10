@@ -1,6 +1,6 @@
 # AI Coach Skills
 
-**213 expert AI skills** for coding agents — **AI Coach** at [aicoach.pw](https://aicoach.pw). Also distributed via [Skillfish](https://skill.fish).
+**214 expert AI skills** for coding agents — **AI Coach** at [aicoach.pw](https://aicoach.pw). Also distributed via [Skillfish](https://skill.fish).
 
 **Product site:** [aicoach.pw](https://aicoach.pw)
 
