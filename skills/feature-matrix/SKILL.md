@@ -19,14 +19,14 @@ description: Build and incrementally maintain a feature matrix document that map
 - Generating a living document that maps features to deliverables and stories
 - Preparing for a product review, retrospective, or architecture decision record
 - After shipping new features — incrementally updating the matrix
-- Running `/feature-matrix` or `/update-features` slash commands
+- Running `/build-feature-matrix` or `/update-feature-matrix` slash commands
 
 ## Slash Commands
 
 | Command | What it does |
 |---------|--------------|
-| `/feature-matrix` | Generate or fully rebuild the feature matrix document |
-| `/update-features` | Incremental update — scan for changes since last recorded RFC date |
+| `/build-feature-matrix` | Generate or fully rebuild the feature matrix document |
+| `/update-feature-matrix` | Incremental update — scan for changes since last recorded RFC date |
 
 ## Concepts
 
@@ -84,7 +84,7 @@ Look for an existing feature matrix file in this order:
 ```
 docs/features.md
 docs/FEATURES.md
-docs/feature-matrix.md
+docs/build-feature-matrix.md
 FEATURES.md
 ```
 
@@ -109,7 +109,7 @@ If it does **not** exist:
 #### Step 3: Pick Output File
 
 If the target path already has a file with different content (e.g. `docs/features.md` is a manual document):
-- Try `docs/feature-matrix.md` instead
+- Try `docs/build-feature-matrix.md` instead
 - If that also exists, try `docs/project-features.md`
 - Never overwrite an unrelated file
 
@@ -335,7 +335,7 @@ When the config does **not** exist:
 
 ### Example 1: First Run on a Project Without GitHub Issues
 
-**Trigger:** User runs `/feature-matrix` on a repo with no project-config.
+**Trigger:** User runs `/build-feature-matrix` on a repo with no project-config.
 
 **Actions:**
 1. No `docs/features.md` found — enter full generation mode
@@ -348,7 +348,7 @@ When the config does **not** exist:
 
 ### Example 2: Incremental Update After New Features Ship
 
-**Trigger:** User runs `/update-features` two weeks after initial generation.
+**Trigger:** User runs `/update-feature-matrix` two weeks after initial generation.
 
 **Actions:**
 1. Read existing `docs/features.md` — find state footer with `last_date: 2026-03-31`
@@ -366,13 +366,13 @@ When the config does **not** exist:
 **Actions:**
 1. Detect `docs/features.md` exists but doesn't contain `<!-- feature-matrix-state` footer
 2. This is not a feature matrix file — do not overwrite
-3. Try `docs/feature-matrix.md` — does not exist
-4. Write feature matrix to `docs/feature-matrix.md`
-5. Inform user: "Wrote to docs/feature-matrix.md (docs/features.md already had different content)"
+3. Try `docs/build-feature-matrix.md` — does not exist
+4. Write feature matrix to `docs/build-feature-matrix.md`
+5. Inform user: "Wrote to docs/build-feature-matrix.md (docs/features.md already had different content)"
 
 ### Example 4: Project With github-project-manager Active
 
-**Trigger:** User runs `/feature-matrix` on a project that has `.github/project-config.json`.
+**Trigger:** User runs `/build-feature-matrix` on a project that has `.github/project-config.json`.
 
 **Actions:**
 1. Read project-config: owner=`acme`, repo=`platform`, project #4
