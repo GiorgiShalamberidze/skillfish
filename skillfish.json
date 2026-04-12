@@ -1,6 +1,7 @@
 {
   "version": 1,
   "skills": [
+    "JuliusBrussee/caveman/skills/caveman",
     "johnefemer/skillfish/skills/ab-test-setup",
     "johnefemer/skillfish/skills/ad-creative",
     "johnefemer/skillfish/skills/agent-designer",
