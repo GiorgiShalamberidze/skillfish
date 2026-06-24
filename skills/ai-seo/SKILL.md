@@ -324,6 +324,10 @@ AI SEO is still evolving. State what's proven vs. pattern-matching.
 
 ---
 
+## Attribution
+
+Portions adapted from [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) (MIT). See [ATTRIBUTION.md](ATTRIBUTION.md).
+
 ## Related Skills
 
 - **content-production**: Create underlying content before optimizing for AI citation
